@@ -1,0 +1,57 @@
+//
+//  DetailEditView.swift
+//  Scrumdinger
+//
+//  Created by Mohamed Atallah on 28/05/2025.
+//
+
+import SwiftUI
+
+struct DetailEditView: View {
+    @State private var scrum = DailyScrum.emptyScurm
+    @State private var attendeeName = ""
+    var body: some View {
+        Form {
+            Section(header: Text("Meeting info")) {
+                TextField("Title", text: $scrum.title)
+                HStack {
+                    Slider(value: $scrum.lengthInMinutesAsDouble, in: 5...30, step: 1) {
+                        //TextView won’t appear onscreen, but VoiceOver uses it to identify the purpose of the slider.
+                        Text("Length")
+                    }
+                    .accessibilityValue("\(scrum.lengthInMinutes) minutes")
+                    Spacer()
+                    Text("\(scrum.lengthInMinutes) minutes")
+                        .accessibilityHidden(true)
+                }
+            }
+            Section(header: Text("Attendees")) {
+                ForEach(scrum.attendees) { attendee in
+                    Text(attendee.name)
+                }
+                .onDelete { indices in
+                    scrum.attendees.remove(atOffsets: indices)
+                }
+                HStack {
+                    TextField("New Attendee", text: $attendeeName)
+                    Button(action: {
+                        withAnimation {
+                            let newAttendee = DailyScrum.Attendee(name: attendeeName)
+                            scrum.attendees.append(newAttendee)
+                            //clear the content of the text field
+                            attendeeName = ""
+                        }
+                    }) {
+                        Image(systemName: "plus.circle.fill")
+                            .accessibilityLabel("Add Attendee")
+                    }
+                    .disabled(attendeeName.isEmpty)
+                }
+            }
+        }
+    }
+}
+
+#Preview {
+    DetailEditView()
+}
