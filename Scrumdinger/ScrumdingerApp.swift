@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+///@main attripute informs the system that this is the only entry point for the app.
 @main
 struct ScrumdingerApp: App {
     @State private var scrums = DailyScrum.sampleData
