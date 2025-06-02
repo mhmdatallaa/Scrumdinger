@@ -10,10 +10,11 @@ import TimerKit
 import AVFoundation
 
 struct MeetingView: View {
-    @State private var scrumTimer = ScrumTimer()
     let scrum: DailyScrum
-    
     private let player = AVPlayer.dingPlayer()
+    
+    @State private var scrumTimer = ScrumTimer()
+    @Binding var errorWrapper: ErrorWrapper?
     
     @Environment(\.modelContext) private var context
     
@@ -34,7 +35,11 @@ struct MeetingView: View {
             startScrum()
         }
         .onDisappear {
-            endScrum()
+            do {
+                try endScrum()
+            } catch {
+                errorWrapper = ErrorWrapper(error: error, guidance: "Meeting time was not recorded. Try again later.")
+            }
         }
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -48,15 +53,15 @@ struct MeetingView: View {
         scrumTimer.startScrum()
     }
     
-    private func endScrum() {
+    private func endScrum() throws {
         scrumTimer.stopScrum()
         let newHistory = History(attendees: scrum.attendees)
         scrum.history.insert(newHistory, at: 0)
-        try? context.save()
+        try context.save()
     }
 }
 
 #Preview {
     let scrum = DailyScrum.sampleData[0]
-    MeetingView(scrum: scrum)
+    MeetingView(scrum: scrum, errorWrapper: .constant(nil))
 }
