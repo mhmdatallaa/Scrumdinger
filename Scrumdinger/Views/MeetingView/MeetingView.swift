@@ -11,9 +11,11 @@ import AVFoundation
 
 struct MeetingView: View {
     @State private var scrumTimer = ScrumTimer()
-    @Binding var scrum: DailyScrum
+    let scrum: DailyScrum
     
     private let player = AVPlayer.dingPlayer()
+    
+    @Environment(\.modelContext) private var context
     
     var body: some View {
         ZStack {
@@ -50,10 +52,11 @@ struct MeetingView: View {
         scrumTimer.stopScrum()
         let newHistory = History(attendees: scrum.attendees)
         scrum.history.insert(newHistory, at: 0)
+        try? context.save()
     }
 }
 
 #Preview {
-    @Previewable @State var scrum = DailyScrum.sampleData[0]
-    MeetingView(scrum: $scrum)
+    let scrum = DailyScrum.sampleData[0]
+    MeetingView(scrum: scrum)
 }
