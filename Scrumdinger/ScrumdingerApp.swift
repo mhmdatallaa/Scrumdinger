@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 ///@main attripute informs the system that this is the only entry point for the app.
 @main
@@ -13,7 +14,8 @@ struct ScrumdingerApp: App {
     @State private var scrums = DailyScrum.sampleData
     var body: some Scene {
         WindowGroup {
-            ScrumsView(scrums: $scrums)
+            ScrumsView()
         }
+        .modelContainer(for: DailyScrum.self)
     }
 }

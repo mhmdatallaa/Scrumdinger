@@ -3,4 +3,22 @@
    uuid = "2B673C97-DBAA-4ED4-9B4E-961D4DEDC77E"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0F128603-E97F-4FCE-BCC6-8BFE2871C863"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../var/folders/hj/5lyqx0vx4tqfrq1grfb1090r0000gn/T/swift-generated-sources/@__swiftmacro_11Scrumdinger10DailyScrumC7history18_PersistedPropertyfMa_.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1"
+            endingLineNumber = "1"
+            landmarkName = "history"
+            landmarkType = "37">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
