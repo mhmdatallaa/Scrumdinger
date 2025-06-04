@@ -14,11 +14,20 @@ class History: Identifiable {
     var date: Date
     var attendees: [Attendee]
     var dailyScrum: DailyScrum?
+    var transcript: String?
     
-    init(id: UUID = UUID(), date: Date = Date(), attendees: [Attendee]) {
-            self.id = id
-            self.date = date
-            self.attendees = attendees
-        }
+    init(id: UUID = UUID(), date: Date = Date(), attendees: [Attendee], transcript: String? = nil) {
+        self.id = id
+        self.date = date
+        self.attendees = attendees
+        self.transcript = transcript
+    }
+    
+}
 
+
+extension History {
+    var attendeesString: String {
+        ListFormatter.localizedString(byJoining: attendees.map {$0.name})
+    }
 }
